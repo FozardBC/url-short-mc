@@ -22,9 +22,11 @@ func main() {
 	var errShutdown = make(chan error, 1)
 	// get config # viper
 
-	config := config.MustReadConfig()
+	//cfg := config.MustReadConfig()
 
-	log := logging.New(config.Log)
+	cfg := config.DebugConfig()
+
+	log := logging.New(cfg.Log)
 
 	log.Info("logger is runned")
 
@@ -46,11 +48,11 @@ func main() {
 	api := api.NewAPI(log, storage)
 
 	srv := &http.Server{
-		Addr:         config.Server.Host + ":" + config.Server.Port,
+		Addr:         cfg.Server.Host + ":" + cfg.Server.Port,
 		Handler:      api.Router,
-		ReadTimeout:  config.Server.Timeout,
-		WriteTimeout: config.Server.Timeout,
-		IdleTimeout:  config.Server.IdleTimout,
+		ReadTimeout:  cfg.Server.Timeout,
+		WriteTimeout: cfg.Server.Timeout,
+		IdleTimeout:  cfg.Server.IdleTimout,
 	}
 
 	go func(errShutdown chan error) {
@@ -60,6 +62,9 @@ func main() {
 			errShutdown <- err
 		}
 	}(errShutdown)
+
+	log.Info("http server is runned")
+
 	//	graceful shutdown
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
