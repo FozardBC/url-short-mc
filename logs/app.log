@@ -1,0 +1,2 @@
+{"time":"2025-04-10T15:59:26.9585044+03:00","level":"INFO","source":{"function":"main.main","file":"C:/src/pets/microservice_test/cmd/microservice/main.go","line":15},"msg":"logger is run"}
+{"time":"2025-04-10T16:02:34.9613609+03:00","level":"INFO","source":{"function":"main.main","file":"C:/src/pets/microservice_test/cmd/microservice/main.go","line":15},"msg":"logger is run"}

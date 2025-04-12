@@ -1,0 +1,16 @@
+log: #debug / dev / prod
+storage:
+  path: 
+  name: 
+  username: 
+  password: 
+http_server:
+  host: 
+  port: 
+  timeout: "6s"
+  idle_timeout: "60s"
+rabbit:
+  login: 
+  password: 
+  addr: 
+
