@@ -11,9 +11,9 @@ var (
 )
 
 type Storage interface {
-	URL(alias string) (string, error)
+	GetURL(alias string) (string, error)
 	SaveURL(url string, alias string) error
-	RemoveAlias(alias string) error
+	DeleteURL(alias string) error
 	Ping(ctx context.Context, errShutDown chan error) error
 	Close()
 }
