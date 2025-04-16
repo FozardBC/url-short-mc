@@ -20,6 +20,7 @@ type API struct {
 func NewAPI(l *slog.Logger, s storage.Storage) *API {
 	api := &API{
 		Router:  gin.New(),
+		Router:  gin.New(),
 		storage: s,
 		log:     l,
 	}
@@ -36,7 +37,12 @@ func (api *API) SetUpRoutes() {
 
 	v1.POST("/url", save.New(api.log, api.storage))
 	v1.DELETE("/url/:alias", deleteHandler.New(api.log, api.storage))
+	v1.Use(gin.Logger())
 
+	v1.POST("/url", save.New(api.log, api.storage))
+	v1.DELETE("/url/:alias", deleteHandler.New(api.log, api.storage))
+
+	v1.GET("/:alias", redirect.New(api.log, api.storage))
 	v1.GET("/:alias", redirect.New(api.log, api.storage))
 
 }
