@@ -6,7 +6,7 @@ import (
 	"microservice_t/internal/config"
 	logging "microservice_t/internal/logger"
 	"microservice_t/internal/storage"
-	"microservice_t/internal/storage/hashmap"
+	postorage "microservice_t/internal/storage/postgres"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	//ctx := context.Background()
+	ctx := context.Background()
 
 	var storage storage.Storage
 
@@ -30,14 +30,12 @@ func main() {
 
 	log.Info("logger is runned")
 
-	// storage, err := postorage.New(ctx, log, config)
-	// if err != nil {
-	// 	log.Error("database not initizalited", "err", err.Error())
+	storage, err := postorage.New(ctx, log, cfg)
+	if err != nil {
+		log.Error("database not initizalited", "err", err.Error())
 
-	// 	errShutdown <- err
-	// }
-
-	storage = hashmap.New()
+		errShutdown <- err
+	}
 
 	log.Info("Storage is runned")
 

@@ -6,10 +6,10 @@ func DebugConfig() *Config {
 	return &Config{
 		Log: "debug",
 		Storage: storage{
-			Path:     "localhost:8080",
-			Name:     "url-s",
+			Path:     "localhost:5432",
+			Name:     "url-short-db",
 			Username: "postgres",
-			Password: "Azer6789",
+			Password: "qwerty",
 		},
 		Server: http_server{
 			Host:       "localhost",

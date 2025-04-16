@@ -1,6 +1,7 @@
 package redirect
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"microservice_t/internal/lib/api/response"
@@ -12,7 +13,7 @@ import (
 )
 
 type URLGetter interface {
-	GetURL(alias string) (string, error)
+	GetURL(ctx context.Context, alias string) (string, error)
 }
 
 func New(log *slog.Logger, urlGetter URLGetter) gin.HandlerFunc {
@@ -30,7 +31,7 @@ func New(log *slog.Logger, urlGetter URLGetter) gin.HandlerFunc {
 			return
 		}
 
-		url, err := urlGetter.GetURL(alias)
+		url, err := urlGetter.GetURL(context.TODO(), alias)
 		if err != nil {
 			if errors.Is(err, storage.ErrAliasNotFound) {
 				log.Info("alias not found")

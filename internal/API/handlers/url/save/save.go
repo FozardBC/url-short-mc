@@ -1,6 +1,7 @@
 package save
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"microservice_t/internal/lib/api/response"
@@ -26,7 +27,7 @@ type Response struct {
 }
 
 type URLSaver interface {
-	SaveURL(urlToSave string, alias string) error
+	SaveURL(ctx context.Context, urlToSave string, alias string) error
 }
 
 func New(log *slog.Logger, urlSaver URLSaver) gin.HandlerFunc {
@@ -60,7 +61,7 @@ func New(log *slog.Logger, urlSaver URLSaver) gin.HandlerFunc {
 			req.Alias = random.NewRandomString(aliasLenth)
 		}
 
-		err := urlSaver.SaveURL(req.URL, req.Alias)
+		err := urlSaver.SaveURL(context.TODO(), req.URL, req.Alias)
 		if err != nil {
 			if errors.Is(err, storage.ErrAliasAlreadyExists) {
 				log.Debug("alias is already exists", "url", req.URL, "alias", req.Alias)

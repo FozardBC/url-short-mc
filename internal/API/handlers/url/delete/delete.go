@@ -1,6 +1,7 @@
 package delete
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"microservice_t/internal/lib/api/response"
@@ -12,7 +13,7 @@ import (
 )
 
 type URLDeleter interface {
-	DeleteURL(alias string) error
+	DeleteURL(ctx context.Context, alias string) error
 }
 
 func New(log *slog.Logger, urlDeleter URLDeleter) gin.HandlerFunc {
@@ -24,7 +25,7 @@ func New(log *slog.Logger, urlDeleter URLDeleter) gin.HandlerFunc {
 
 		alias := c.Param("alias")
 
-		err := urlDeleter.DeleteURL(alias)
+		err := urlDeleter.DeleteURL(context.TODO(), alias)
 		if err != nil {
 			if errors.Is(err, storage.ErrAliasNotFound) {
 				log.Error("alias not found", "alias", alias)
