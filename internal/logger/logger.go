@@ -53,8 +53,6 @@ func setupPrettySlog() *slog.Logger {
 		SlogOpts: &slog.HandlerOptions{
 			Level:     slog.LevelDebug,
 			AddSource: true,
-			Level:     slog.LevelDebug,
-			AddSource: true,
 		},
 	}
 

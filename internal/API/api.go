@@ -19,8 +19,8 @@ type API struct {
 
 func NewAPI(l *slog.Logger, s storage.Storage) *API {
 	api := &API{
-		Router:  gin.New(),
-		Router:  gin.New(),
+		Router: gin.New(),
+
 		storage: s,
 		log:     l,
 	}
